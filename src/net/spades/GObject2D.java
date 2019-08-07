@@ -28,7 +28,7 @@ public class GObject2D {
         {
             for (int i = 0; i < Structure.size(); i++)
             {
-                if (t.isEquals(Structure.get(i)))
+                if (t.equals(Structure.get(i)))
                 {
                     isContent = true;
                 }

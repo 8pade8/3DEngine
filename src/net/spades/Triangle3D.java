@@ -1,68 +1,87 @@
 package net.spades;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.geom.Line2D;
-
 /**
  * Created by ptmkpd on 17.06.16.
  */
 public class Triangle3D {
-    Point3D A;
-    Point3D B;
-    Point3D C;
+    private Point3D A;
+    private Point3D B;
+    private Point3D C;
 
-    public Triangle3D(Point3D a,Point3D b, Point3D c)
-    {
+
+    public Point3D getA() {
+        return A;
+    }
+
+    public Point3D getB() {
+        return B;
+    }
+
+    public Point3D getC() {
+        return C;
+    }
+
+    public Triangle3D(Point3D a, Point3D b, Point3D c) {
         A = a;
         B = b;
         C = c;
     }
 
-    public  Point3D getCenter()
-    {
-        return new Point3D((A.x+B.x+C.x)/3,(A.y+B.y+C.y)/3,(A.z+B.z+C.z)/3);
+    public  Point3D getCenter() {
+        return new Point3D((A.getX()+B.getX()+C.getX())/3,(A.getY()+B.getY()+C.getY())/3,(A.getZ()+B.getZ()+C.getZ())/3);
     }
 
-    public void Move(float dx, float dy, float dz)
-    {
-        A = A.move(dx,dy,dz);
-        B = B.move(dx,dy,dz);
-        C = C.move(dx,dy,dz);
+    public void move(float dx, float dy, float dz) {
+        A.move(dx,dy,dz);
+        B.move(dx,dy,dz);
+        C.move(dx,dy,dz);
     }
 
-    public void RotateOfCenter(double a, String os)
+    public void rotateOfCenter(float angle, Axises axis)
     {
         Point3D center = getCenter();
-        A.RotateD(center,a,os);
-        B.RotateD(center,a,os);
-        C.RotateD(center,a,os);
+        A.rotateD(center,angle,axis);
+        B.rotateD(center,angle,axis);
+        C.rotateD(center,angle,axis);
     }
 
-    public void RotateD(Point3D o,double a, String os)
+    void RotateD(Point3D o, float angle, Axises axis)
     {
-        A.RotateD(o,a,os);
-        B.RotateD(o,a,os);
-        C.RotateD(o,a,os);
+        A.rotateD(o,angle,axis);
+        B.rotateD(o,angle,axis);
+        C.rotateD(o,angle,axis);
     }
 
 
-    public GObject toGObject()
+    public GObject toGObject()  //TO DO WTF??
     {
         GObject GO = new GObject();
         GO.addTriangle(this);
         return GO;
     }
 
-    public boolean isEquals (Triangle3D triangle3D) ///// ПЕРЕДЕЛАТЬ стороны вместо точек
-    {
-        if (A.isEquals(triangle3D.A)&B.isEquals(triangle3D.B)&C.isEquals(triangle3D.C)) return true;
-        else if (A.isEquals(triangle3D.A)&B.isEquals(triangle3D.C)&C.isEquals(triangle3D.B)) return true;
-        else if (A.isEquals(triangle3D.B)&B.isEquals(triangle3D.A)&C.isEquals(triangle3D.C)) return true;
-        else if (A.isEquals(triangle3D.B)&B.isEquals(triangle3D.C)&C.isEquals(triangle3D.A)) return true;
-        else if (A.isEquals(triangle3D.C)&B.isEquals(triangle3D.A)&C.isEquals(triangle3D.B)) return true;
-        else if (A.isEquals(triangle3D.C)&B.isEquals(triangle3D.B)&C.isEquals(triangle3D.A)) return true;
-        else return false;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj==null) {
+            return false;
+        }
+        if (obj.getClass()!= Triangle.class) {
+            return false;
+        }
+        Triangle3D triangle3D = (Triangle3D) obj;
+
+        Line3D K = new Line3D(A, B);
+        Line3D L = new Line3D(B, C);
+        Line3D M = new Line3D(C, A);
+        Line3D K2 = new Line3D(triangle3D.A, triangle3D.B);
+        Line3D L2 = new Line3D(triangle3D.B, triangle3D.C);
+        Line3D M2 = new Line3D(triangle3D.C, triangle3D.A);
+        return K.equals(K2)&&L.equals(L2)&&M.equals(M2)||
+                K.equals(K2)&&L.equals(M2)&&M.equals(L2)||
+                K.equals(L2)&&L.equals(K2)&&M.equals(M2)||
+                K.equals(L2)&&L.equals(M2)&&M.equals(K2)||
+                K.equals(M2)&&L.equals(L2)&&M.equals(K2)||
+                K.equals(M2)&&L.equals(K2)&&M.equals(L2);
     }
 
     public boolean isCross (Line3D line3D)
@@ -70,7 +89,7 @@ public class Triangle3D {
         Plane3D plane = new Plane3D(A,B,C);
         if (plane.isCrossLine(line3D))
         {
-            Point3D point3D = plane.CrossOfLine(line3D.getFunction());
+            Point3D point3D = plane.crossOfLine(line3D);
             boolean tri = isContent(point3D);
             boolean lin = line3D.isContent(point3D);
             return tri & lin;
@@ -78,9 +97,7 @@ public class Triangle3D {
         else return false;
     }
 
-    public boolean isContent(Point3D p)
-    {
-
+    boolean isContent(Point3D p) {
             Triangle3D t1 = new Triangle3D(A,B,p);
             Triangle3D t2 = new Triangle3D(B,C,p);
             Triangle3D t3 = new Triangle3D(C,A,p);
@@ -88,16 +105,17 @@ public class Triangle3D {
             return S<=square()*1.0001;
     }
 
-    public double square()
-    {
-        float p = (A.Dimension()+B.Dimension()+C.Dimension())/2;
-        double S = Math.sqrt(p*(p-A.Dimension())*(p-B.Dimension())*(p-C.Dimension()));
+    private double square() {
+        Line3D K = new Line3D(A, B);
+        Line3D L = new Line3D(B, C);
+        Line3D M = new Line3D(C, A);
+        float p = (K.length()+L.length()+M.length())/2;
+        float S = (float) Math.sqrt(p*(p-K.length())*(p-L.length())*(p-M.length()));
         return S;
     }
 
-    public Plane3D getPlane() //используется в lastFirst
-    {
-        Plane3D plane3D = new Plane3D(A.A,B.A,C.A);
+    public Plane3D getPlane() {//используется в lastFirst
+        Plane3D plane3D = new Plane3D(A,B,C);
         return plane3D;
     }
 }

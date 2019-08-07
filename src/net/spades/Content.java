@@ -3,7 +3,6 @@ package net.spades;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
 public class Content extends JPanel implements Runnable
 {
@@ -47,24 +46,24 @@ public class Content extends JPanel implements Runnable
        prj = new Projector(this);
 
         GO = new GObject();
-        Cube3D  cube3D = new Cube3D(new Point3D(),100,200);
-        Cube3D  cube3D2 = new Cube3D(new Point3D(0,0,200),100,200);
-        Cube3D  cube3D3 = new Cube3D(new Point3D(200,0,0),100,200);
-        Cube3D  cube3D4 = new Cube3D(new Point3D(200,0,200),100,200);
-        Cube3D  cube3D5 = new Cube3D(new Point3D(400,0,0),100,200);
-        Cube3D  cube3D6 = new Cube3D(new Point3D(0,0,400),100,200);
-        Cube3D  cube3D7 = new Cube3D(new Point3D(400,0,400),100,200);
-        Cube3D  cube3D8 = new Cube3D(new Point3D(200,0,400),100,200);
-        Cube3D  cube3D9 = new Cube3D(new Point3D(400,0,200),100,200);
+        Cube3D  cube3D = new Cube3D(new Point3D(),100);
+//        Cube3D  cube3D2 = new Cube3D(new Point3D(0,0,200),100,200);
+//        Cube3D  cube3D3 = new Cube3D(new Point3D(200,0,0),100,200);
+//        Cube3D  cube3D4 = new Cube3D(new Point3D(200,0,200),100,200);
+//        Cube3D  cube3D5 = new Cube3D(new Point3D(400,0,0),100,200);
+//        Cube3D  cube3D6 = new Cube3D(new Point3D(0,0,400),100,200);
+//        Cube3D  cube3D7 = new Cube3D(new Point3D(400,0,400),100,200);
+//        Cube3D  cube3D8 = new Cube3D(new Point3D(200,0,400),100,200);
+//        Cube3D  cube3D9 = new Cube3D(new Point3D(400,0,200),100,200);
         GO = cube3D.toGObject();
-        GO.Group(cube3D2.toGObject());
-        GO.Group(cube3D3.toGObject());
-        GO.Group(cube3D4.toGObject());
-        GO.Group(cube3D5.toGObject());
-        GO.Group(cube3D6.toGObject());
-        GO.Group(cube3D7.toGObject());
-        GO.Group(cube3D8.toGObject());
-        GO.Group(cube3D9.toGObject());
+//        GO.group(cube3D2.toGObject());
+//        GO.group(cube3D3.toGObject());
+//        GO.group(cube3D4.toGObject());
+//        GO.group(cube3D5.toGObject());
+//        GO.group(cube3D6.toGObject());
+//        GO.group(cube3D7.toGObject());
+//        GO.group(cube3D8.toGObject());
+//        GO.group(cube3D9.toGObject());
 
        Triangle3D t1 = new Triangle3D(new Point3D(),new Point3D(0,0,50),new Point3D(0,50,0));
        Triangle3D t1x = new Triangle3D(new Point3D(),new Point3D(50,0,0),new Point3D(0,50,0));
@@ -102,15 +101,9 @@ public class Content extends JPanel implements Runnable
 
 
 
-        Rectangle3D r1 = new Rectangle3D(new Point3D(),100);
         Rectangle3D r2 = new Rectangle3D(new Point3D(),100);
-        r2.RotateD(new Point3D(),90,"x");
-        Rectangle3D r3 = new Rectangle3D(new Point3D(),100,"1");
-        r3.RotateD(new Point3D(),90,"y");
+        r2.rotateD(new Point3D(),90,Axises.X);
 
-        Rectangle3D r4 = new Rectangle3D(new Point3D(0,0,100),100);
-        Rectangle3D r5 = new Rectangle3D(new Point3D(0,100,100),100,"2");
-        r5.RotateD(new Point3D(0,100,100),-90,"x");
 
  //    GO.addTriangle(t1);
  //    GO.addTriangle(t1x);
@@ -126,19 +119,19 @@ public class Content extends JPanel implements Runnable
 //       GO.addTriangle(t12);
 //        GO.addTriangle(t13);
         //GO = r1.toGObject();
-       // GO.Group(r2.toGObject());
+       // GO.group(r2.toGObject());
 
-        //GO.Group(r4.toGObject());
+        //GO.group(r4.toGObject());
 
-       //GO.Group(t21.toGObject());
-       //GO.Group(t22.toGObject());
+       //GO.group(t21.toGObject());
+       //GO.group(t22.toGObject());
 
-//         GO.Group(r5.toGObject()); /// ??????
-//        GO.Group(r3.toGObject()); ///??????
-//        GO.Group(tex1.toGObject());
-//        GO.Group(tex2.toGObject());
-//        GO.Group(tex3.toGObject());
-//        GO.Group(tex4.toGObject());
+//         GO.group(r5.toGObject()); /// ??????
+//        GO.group(r3.toGObject()); ///??????
+//        GO.group(tex1.toGObject());
+//        GO.group(tex2.toGObject());
+//        GO.group(tex3.toGObject());
+//        GO.group(tex4.toGObject());
 
 
 
@@ -177,14 +170,14 @@ public class Content extends JPanel implements Runnable
         {
 
 
-          GO.Rotate(new Point3D(),-2,-2,-2);
+          GO.rotate(new Point3D(),-2,-2,-2);
             prj.DrawBG(g);
 
-           prj.DrawGO(cam.Transpose(GO),g);
-//            System.out.println(GO.Structure.get(0).name);
-//            System.out.println(GO.Structure.get(1).name);
-//            System.out.println(GO.Structure.get(2).name);
-//            System.out.println(GO.Structure.get(3).name);
+           prj.DrawGO(cam.transpose(GO),g);
+//            System.out.println(GO.structure.get(0).name);
+//            System.out.println(GO.structure.get(1).name);
+//            System.out.println(GO.structure.get(2).name);
+//            System.out.println(GO.structure.get(3).name);
 
             update();
             toScreen();

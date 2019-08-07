@@ -4,80 +4,73 @@ package net.spades;
  * Created by stanislav on 02.07.16.
  */
 public class Plane3D {
-    double A;
-    double B;
-    double C;
-    double D;
+    float A;
+    float B;
+    float C;
+    float D;
 
-    public Plane3D(double a, double b, double c, double d)
-    {
+    public Plane3D(float a, float b, float c, float d) {
         A = a;
         B = b;
         C = c;
         D = d;
     }
 
-    public Plane3D(Vector3D vector, Point3D point)
-    {
-        A = vector.i;
-        B = vector.j;
-        C = vector.k;
-        D = -vector.i*point.x-vector.j*point.y-vector.k*point.z;
+    public Plane3D(Vector3D vector, Point3D point) {
+        A = vector.getI();
+        B = vector.getJ();
+        C = vector.getK();
+        D = -vector.getI()*point.getX()-vector.getJ()*point.getY()-vector.getK()*point.getZ();
     }
 
     public Plane3D(Point3D p1, Point3D p2, Point3D p3)
     {
         Vector3D v1 = new Vector3D(p1,p2);
         Vector3D v2 = new Vector3D(p1,p3);
-        Vector3D n = v1.Multiply(v2);
-        A = n.i;
-        B = n.j;
-        C = n.k;
-        D = -n.i*p1.x-n.j*p1.y-n.k*p1.z;
+        Vector3D n = v1.multiply(v2);
+        A = n.getI();
+        B = n.getJ();
+        C = n.getK();
+        D = -n.getI()*p1.getX()-n.getJ()*p1.getY()-n.getK()*p1.getZ();
     }
 
-    public Point3D CrossOfLine(FunctionLine3D line)
-    {
-        double t = -(D+A*line.x0+B*line.y0+C*line.z0)/(A*line.m+B*line.n+C*line.p);
-        double x = line.x0+line.m*t;
-        double y = line.y0+line.n*t;
-        double z = line.z0+line.p*t;
+    public Point3D crossOfLine(Line3D line) {
+        float t = -(D+A*line.getX0()+B*line.getY0()+C*line.getZ0())/(A*line.getM()+B*line.getN()+C*line.getP());
+        float x = line.getX0()+line.getM()*t;
+        float y = line.getY0()+line.getN()*t;
+        float z = line.getZ0()+line.getP()*t;
         return new Point3D(x,y,z);
     }
 
-    public boolean isCrossLine(Line3D line3D)
-    {
-        FunctionLine3D line = line3D.getFunction();
-        Vector3D v1 = new Vector3D(line.m,line.n,line.p);
+    public boolean isCrossLine(Line3D line3D) {
+        Vector3D v1 = new Vector3D(line3D.getM(),line3D.getN(),line3D.getP());
         Vector3D v2 = new Vector3D(A,B,C);
-        return v1.ScalarMultiply(v2)!=0;
+        return v1.scalarMultiply(v2)!=0;
     }
 
-    public boolean isContent(Point3D p)
-    {
-        return A*p.x+B*p.y+C*p.z+D<0.01 & A*p.x+B*p.y+C*p.z+D>-0.01;
+    public boolean isContent(Point3D p) {
+        return A*p.getX()+B*p.getY()+C*p.getZ()+D<0.01 & A*p.getX()+B*p.getY()+C*p.getZ()+D>-0.01;
     }
 
-    public boolean isContent(Line3D l) //используется в lastFirst
-    {
-        return isContent(l.A)&isContent(l.B);
+    public boolean isContent(Line3D l) {
+        //используется в lastFirst
+        return isContent(l.getX())&isContent(l.getY());
     }
 
-    public double DimensionOfPoint(Point3D M)
-    {
-        return Math.abs(A*M.x+B*M.y+C*M.z+D)/Math.sqrt(A*A+B*B+C*C);
+    public float dimensionOfPoint(Point3D M) {
+        return (float) (Math.abs(A*M.getX()+B*M.getY()+C*M.getZ()+D)/Math.sqrt(A*A+B*B+C*C));
     }
 
-    public double DimensionOfPlane(Plane3D P)
+    public float dimensionOfPlane(Plane3D P)
     {
-        return (Math.abs(P.D-D))/(Math.sqrt(A*A+B*B+C*C));
+        return (float) ((Math.abs(P.D-D))/(Math.sqrt(A*A+B*B+C*C)));
     }
 
     public boolean isPerpendicular(Plane3D P) //используется в lastFirst
     {
         Vector3D p1 = new Vector3D(A,B,C);
         Vector3D p2 = new Vector3D(P.A,P.B,P.C);
-        double rez = p1.ScalarMultiply(p2);
+        double rez = p1.scalarMultiply(p2);
         return rez<0.01 & rez>-0.01;
     }
 }

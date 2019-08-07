@@ -25,12 +25,12 @@ public class Projector {
 
     private Point2D Transpose(Point2D point)
     {
-        return new Point2D(point.x+x,y-point.y);
+        return new Point2D(point.getX()+x,y-point.getY());
     }
 
     private Line2D Transpose(Line2D line)
     {
-        return new Line2D(Transpose(line.A),Transpose(line.B));
+        return new Line2D(Transpose(line.getX()),Transpose(line.getY()));
     }
 
     private Triangle Transpose(Triangle tri)
@@ -59,14 +59,14 @@ public class Projector {
             Line2D l2=GODW.Structure.get(i).b;
             Line2D l3=GODW.Structure.get(i).c;
 
-            int[] xii = {(int)GODW.Structure.get(i).a.A.x,(int)GODW.Structure.get(i).b.A.x,(int)GODW.Structure.get(i).c.A.x};
-            int[] yii = {(int)GODW.Structure.get(i).a.A.y,(int)GODW.Structure.get(i).b.A.y,(int)GODW.Structure.get(i).c.A.y};
+            int[] xii = {(int)GODW.Structure.get(i).a.getX().getX(),(int)GODW.Structure.get(i).b.getX().getX(),(int)GODW.Structure.get(i).c.getX().getX()};
+            int[] yii = {(int)GODW.Structure.get(i).a.getX().getY(),(int)GODW.Structure.get(i).b.getX().getY(),(int)GODW.Structure.get(i).c.getX().getY()};
             g.setColor(Color.BLUE);
             g.fillPolygon(xii,yii,3);
             g.setColor(Color.WHITE);
-            g.drawLine((int)l1.A.x,(int)l1.A.y,(int)l1.B.x,(int)l1.B.y);
-            g.drawLine((int)l2.A.x,(int)l2.A.y,(int)l2.B.x,(int)l2.B.y);
-            g.drawLine((int)l3.A.x,(int)l3.A.y,(int)l3.B.x,(int)l3.B.y);
+            g.drawLine((int)l1.getX().getX(),(int)l1.getX().getY(),(int)l1.getY().getX(),(int)l1.getY().getY());
+            g.drawLine((int)l2.getX().getX(),(int)l2.getX().getY(),(int)l2.getY().getX(),(int)l2.getY().getY());
+            g.drawLine((int)l3.getX().getX(),(int)l3.getX().getY(),(int)l3.getY().getX(),(int)l3.getY().getY());
 
         }
     }

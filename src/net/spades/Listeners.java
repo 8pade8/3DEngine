@@ -11,24 +11,24 @@ public class Listeners implements KeyListener, MouseMotionListener, MouseListene
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
         if (key == KeyEvent.VK_O) {Content.centerMode=!Content.centerMode; }
-        if (key == KeyEvent.VK_UP) {Content.cam.Move(0,5,0);}
-        if (key == KeyEvent.VK_DOWN) {Content.cam.Move(0,-5,0);}
-        if (key == KeyEvent.VK_LEFT) {Content.cam.Move(-5,0,0);}
-        if (key == KeyEvent.VK_RIGHT) {Content.cam.Move(5,0,0);}
-        if (key == KeyEvent.VK_PAGE_UP) {Content.cam.Move(0,0,5);}
-        if (key == KeyEvent.VK_PAGE_DOWN) {Content.cam.Move(0,0,-5);}
-        if (key == KeyEvent.VK_Q & !Content.centerMode) {Content.cam.Rotate(1,0,0);}
-        if (key == KeyEvent.VK_A & !Content.centerMode)  {Content.cam.Rotate(-1,0,0);}
-        if (key == KeyEvent.VK_W & !Content.centerMode) {Content.cam.Rotate(0,1,0);}
-        if (key == KeyEvent.VK_S & !Content.centerMode) {Content.cam.Rotate(0,-1,0);}
-        if (key == KeyEvent.VK_E & !Content.centerMode) {Content.cam.Rotate(0,0,1);}
-        if (key == KeyEvent.VK_D & !Content.centerMode) {Content.cam.Rotate(0,0,-1);}
-        if (key == KeyEvent.VK_O & !Content.centerMode) {Content.cam.OpticZoom(1);}
-        if (key == KeyEvent.VK_L & !Content.centerMode) {Content.cam.OpticZoom(-1);}
-        if (key == KeyEvent.VK_I & !Content.centerMode) {Content.cam.CyberZoom(1);}
-        if (key == KeyEvent.VK_K & !Content.centerMode) {Content.cam.CyberZoom(-1);}
-        if (key == KeyEvent.VK_SPACE & !Content.centerMode) {Content.GO.Rotate(new Point3D(),2,2,2);}
-        if (key == KeyEvent.VK_BACK_SPACE & !Content.centerMode) {Content.GO.Rotate(new Point3D(),-2,-2,-2);}
+        if (key == KeyEvent.VK_UP) {Content.cam.move(0,5,0);}
+        if (key == KeyEvent.VK_DOWN) {Content.cam.move(0,-5,0);}
+        if (key == KeyEvent.VK_LEFT) {Content.cam.move(-5,0,0);}
+        if (key == KeyEvent.VK_RIGHT) {Content.cam.move(5,0,0);}
+        if (key == KeyEvent.VK_PAGE_UP) {Content.cam.move(0,0,5);}
+        if (key == KeyEvent.VK_PAGE_DOWN) {Content.cam.move(0,0,-5);}
+        if (key == KeyEvent.VK_Q & !Content.centerMode) {Content.cam.rotate(1,0,0);}
+        if (key == KeyEvent.VK_A & !Content.centerMode)  {Content.cam.rotate(-1,0,0);}
+        if (key == KeyEvent.VK_W & !Content.centerMode) {Content.cam.rotate(0,1,0);}
+        if (key == KeyEvent.VK_S & !Content.centerMode) {Content.cam.rotate(0,-1,0);}
+        if (key == KeyEvent.VK_E & !Content.centerMode) {Content.cam.rotate(0,0,1);}
+        if (key == KeyEvent.VK_D & !Content.centerMode) {Content.cam.rotate(0,0,-1);}
+        if (key == KeyEvent.VK_O & !Content.centerMode) {Content.cam.opticZoom(1);}
+        if (key == KeyEvent.VK_L & !Content.centerMode) {Content.cam.opticZoom(-1);}
+        if (key == KeyEvent.VK_I & !Content.centerMode) {Content.cam.cyberZoom(1);}
+        if (key == KeyEvent.VK_K & !Content.centerMode) {Content.cam.cyberZoom(-1);}
+        if (key == KeyEvent.VK_SPACE & !Content.centerMode) {Content.GO.rotate(new Point3D(),2,2,2);}
+        if (key == KeyEvent.VK_BACK_SPACE & !Content.centerMode) {Content.GO.rotate(new Point3D(),-2,-2,-2);}
 
     }
 

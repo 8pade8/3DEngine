@@ -4,62 +4,107 @@ package net.spades;
  * Created by ptmkpd on 17.06.16.
  */
 public class Line3D {
-    Point3D A;
-    Point3D B;
+    private Point3D X;
+    private Point3D Y;
 
-    public  Line3D(Point3D A, Point3D B)
-    {
-        this.A = A;
-        this.B = B;
+    private float x0;
+    private float m;
+    private float y0;
+    private float n;
+    private float z0;
+    private float p;
+
+    public Line3D(Point3D p1, Point3D p2) {
+        X = p1;
+        Y = p2;
+
+        x0 = p1.getX();
+        m = p2.getX()-p1.getX();
+        y0 = p1.getY();
+        n = p2.getY()-p1.getY();
+        z0 = p1.getZ();
+        p = p2.getZ()-p1.getZ();
     }
 
-    public double Dimension()
-    {
-        return  A.DimensionOfPoint(B);
+    public float getX0() {
+        return x0;
     }
 
-    public Line2D TranslateTo2D(Point3D F, Point3D O)
-    {
-        return new Line2D(this.A.TranslateTo2DonXYforF(F,O),this.B.TranslateTo2DonXYforF(F,O));
+    public float getM() {
+        return m;
     }
 
-    public void Move(double dx, double dy, double dz)
-    {
-        A = A.move(dx,dy,dz);
-        B = B.move(dx,dy,dz);
+    public float getY0() {
+        return y0;
     }
 
-    public void Rotate0(double a, String os)
-    {
-        A.Rotate0(a,os);
-        B.Rotate0(a,os);
+    public float getN() {
+        return n;
     }
 
-    public void RotateD(Point3D o,double a, String os)
-    {
-        A.RotateD(o,a,os);
-        B.RotateD(o,a,os);
+    public float getZ0() {
+        return z0;
     }
 
-    public boolean isEquals(Line3D line)
-    {
-        return line.A.isEquals(A) & line.B.isEquals(B) || line.A.isEquals(B) & line.B.isEquals(A);
+    public float getP() {
+        return p;
     }
 
-    public FunctionLine3D getFunction()
-    {
-        return new FunctionLine3D(A,B);
+    public Point3D getX() {
+        return X;
     }
 
-    public boolean isContent(Point3D p)
-    {
-        if (getFunction().isContent(p))
-        {
-            Line3D l1 = new Line3D(p,A);
-            Line3D l2 = new Line3D(p,B);
-            double s = l1.Dimension()+l2.Dimension();
-            return s<=Dimension();
+    public Point3D getY() {
+        return Y;
+    }
+
+    public float length() {
+        return  X.dimensionOfPoint(Y);
+    }
+
+//    public Line2D TranslateTo2D(Point3D F, Point3D O) че кого??
+//    {
+////        return new Line2D(X.TranslateTo2DonXYforF(F,O),Y.TranslateTo2DonXYforF(F,O));
+//    }
+
+    public void move(float dx, float dy, float dz) {
+        X.move(dx,dy,dz);
+        Y.move(dx,dy,dz);
+    }
+
+    public void rotate0(float angle, Axises axis) {
+        X.rotate0(angle,axis);
+        Y.rotate0(angle,axis);
+    }
+
+    public void rotateD(Point3D o, float angle, Axises axis) {
+        X.rotateD(o,angle,axis);
+        Y.rotateD(o,angle,axis);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj==null) {
+            return false;
         }
-        else return false;
+        if (obj.getClass()!= Line3D.class) {
+            return false;
+        }
+        Line3D line = (Line3D) obj;
+        return line.X.equals(X) & line.Y.equals(Y) || line.X.equals(Y) & line.Y.equals(X);    }
+
+    public double dimensionOfPoint(Point3D point)
+    {
+        Vector3D MM = new Vector3D(point,new Point3D(x0,y0,z0));
+        Vector3D s = new Vector3D(m,n,p);
+        double d = MM.multiply(s).length()/s.length();
+        return d;
+    }
+
+    public boolean isContent(Point3D point3D) {
+        float t1 = (point3D.getX()-x0)/m;
+        float t2 = (point3D.getY()-y0)/n;
+        float t3 = (point3D.getZ()-z0)/p;
+        return t1==t2 & t2==t3;
     }
 }

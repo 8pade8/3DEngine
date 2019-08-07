@@ -1,36 +1,35 @@
 package net.spades;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by stanislav on 30.06.16.
  */
 public class GObject {
 
-    public ArrayList<Triangle3D> Structure;
+    public ArrayList<Triangle3D> structure;
     public boolean isSelected;
     static int count;
 
     public GObject()
     {
-        Structure = new ArrayList<Triangle3D>();
+        structure = new ArrayList<Triangle3D>();
     }
 
     public void addTriangle(Triangle3D triangle3D)
     {
         if (!isContent(triangle3D))
-        {Structure.add(triangle3D);}
+        {
+            structure.add(triangle3D);}
     }
 
     public void removeTriangle(Triangle3D triangle3D)
     {
-        for (int i =0;i <Structure.size();i++)
+        for (int i = 0; i < structure.size(); i++)
         {
-         if (Structure.get(i).isEquals(triangle3D))
+         if (structure.get(i).equals(triangle3D))
          {
-             Structure.remove(i);
+             structure.remove(i);
          }
         }
     }
@@ -39,11 +38,11 @@ public class GObject {
     {
         boolean isContent;
         isContent = false;
-        if (Structure.size()>0)
+        if (structure.size()>0)
         {
-            for (int i = 0; i < Structure.size(); i++)
+            for (int i = 0; i < structure.size(); i++)
             {
-                if (triangle3D.isEquals(Structure.get(i)))
+                if (triangle3D.equals(structure.get(i)))
                 {
                     isContent = true;
                 }
@@ -52,50 +51,50 @@ public class GObject {
             return isContent;
     }
 
-    public void Select(Line3D line3D)
+    public void select(Line3D line3D)
     {
-        for (int i=0;i<Structure.size();i++)
+        for (int i = 0; i< structure.size(); i++)
         {
-            if (Structure.get(i).isCross(line3D))
+            if (structure.get(i).isCross(line3D))
             {isSelected = true;}
         }
     }
 
-    public void Group(GObject go)
+    public void group(GObject go)
     {
-        for (int i = 0; i<go.Structure.size();i++)
+        for (int i = 0; i<go.structure.size(); i++)
         {
-           addTriangle(go.Structure.get(i));
+           addTriangle(go.structure.get(i));
         }
     }
 
-    public ArrayList<GObject> DeGroup()
+    public ArrayList<GObject> deGroup()
     {
         ArrayList<GObject> list = new ArrayList<>();
-        for (int i=0;i<Structure.size();i++)
+        for (int i = 0; i< structure.size(); i++)
         {
             GObject obj = new GObject();
-            obj.addTriangle(Structure.get(i));
+            obj.addTriangle(structure.get(i));
             list.add(obj);
         }
         return  list;
     }
 
-    public void Rotate (Point3D o, double alfX, double alfY, double alfZ)
+    public void rotate(Point3D o, float alfX, float alfY, float alfZ)
     {
-        for (int i=0;i<Structure.size();i++)
+        for (int i = 0; i< structure.size(); i++)
         {
-            Structure.get(i).RotateD(o,alfX,"x");
-            Structure.get(i).RotateD(o,alfY,"y");
-            Structure.get(i).RotateD(o,alfZ,"z");
+            structure.get(i).RotateD(o,alfX,Axises.X);
+            structure.get(i).RotateD(o,alfY,Axises.Y);
+            structure.get(i).RotateD(o,alfZ,Axises.Z);
         }
     }
 
-    public void Move (double dx, double dy, double dz)
+    public void move (float dx, float dy, float dz)
     {
-        for (int i=0;i<Structure.size();i++)
+        for (int i = 0; i< structure.size(); i++)
         {
-            Structure.get(i).Move(dx,dy,dz);
+            structure.get(i).move(dx,dy,dz);
         }
     }
 }
