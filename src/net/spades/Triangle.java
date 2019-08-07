@@ -1,76 +1,80 @@
 package net.spades;
 
 
-import java.awt.*;
 import java.util.ArrayList;
 
 /**
  * Created by ptmkpd on 17.06.16.
  */
-public class Triangle {
+ class Triangle {
 
     Line2D a;
     Line2D b;
     Line2D c;
 
 
-    public Triangle(Point2D A, Point2D B, Point2D C)
+    Triangle(Point2D A, Point2D B, Point2D C)
     {
         a = new Line2D(A,B);
         b = new Line2D(B,C);
         c = new Line2D(C,A);
     }
 
-    public Triangle(Line2D a, Line2D b, Line2D c) {
+    Triangle(Line2D a, Line2D b, Line2D c) {
         this.c = c;
         this.b = b;
         this.a = a;
     }
 
-    public boolean isContent(Point2D p)
+    private boolean isContent(Point2D p)
     {
         /* МЯГКОЕ НАХОЖДЕНИЕ точек ВНУТРИ ТРЕУГОЛЬНИКА */
-      double p1 = (a.A.x-p.x)*(b.A.y-a.A.y)-(b.A.x-a.A.x)*(a.A.y-p.y);
-      double p2 = (b.A.x-p.x)*(c.A.y-b.A.y)-(c.A.x-b.A.x)*(b.A.y-p.y);
-      double p3 = (c.A.x-p.x)*(a.A.y-c.A.y)-(a.A.x-c.A.x)*(c.A.y-p.y);
+      float p1 = (a.getX().getX()-p.getX())*(b.getX().getY()-a.getX().getY())-(b.getX().getX()-a.getX().getY())*
+              (a.getX().getY()-p.getY());
+      float p2 = (b.getX().getX()-p.getX())*(c.getX().getY()-b.getX().getY())-(c.getX().getX()-b.getX().getX())*
+              (b.getX().getY()-p.getY());
+      float p3 = (c.getX().getX()-p.getX())*(a.getX().getY()-c.getX().getY())-(a.getX().getX()-c.getX().getX())*
+              (c.getX().getY()-p.getY());
 
         return (p1>=-0.02 & p2>=-0.02 & p3>=-0.02)||(p1<=0.02 & p2<=0.02 & p3<=0.02);
         //Точки на сторонах ВЫВОДЯТСЯ  (неравенство нестрогое)
     }
 
-    public boolean isEquals(Triangle t)
-    {
-        if (a.isEquals(t.a)&b.isEquals(t.b)&c.isEquals(t.c)) return true;
-        else if (a.isEquals(t.a)&b.isEquals(t.c)&c.isEquals(t.b)) return true;
-        else if (a.isEquals(t.b)&b.isEquals(t.a)&c.isEquals(t.c)) return true;
-        else if (a.isEquals(t.c)&b.isEquals(t.c)&c.isEquals(t.a)) return true;
-        else if (a.isEquals(t.c)&b.isEquals(t.a)&c.isEquals(t.b)) return true;
-        else if (a.isEquals(t.c)&b.isEquals(t.b)&c.isEquals(t.a)) return true;
-        else return false;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj==null) {
+            return false;
+        }
+        if (obj.getClass()!= Triangle.class) {
+            return false;
+        }
+        Triangle t = (Triangle) obj;
+        return  (a.equals(t.a)&b.equals(t.b)&c.equals(t.c)) ||
+          (a.equals(t.b)&b.equals(t.a)&c.equals(t.c)) ||
+          (a.equals(t.c)&b.equals(t.c)&c.equals(t.a)) ||
+          (a.equals(t.c)&b.equals(t.a)&c.equals(t.b)) ||
+          (a.equals(t.c)&b.equals(t.b)&c.equals(t.a));
     }
 
-    public boolean isContentPointOfTriangle(Triangle t)
-    {
+    private boolean isContentPointOfTriangle(Triangle t) {
         /*МЯГКОЕ ВЗАИМНОЕ (с учетом точек на линиях)*/
-        boolean t1 = isContent(t.a.A);
-        boolean t2 = isContent(t.b.A);
-        boolean t3 = isContent(t.c.A);
+        boolean t1 = isContent(t.a.getX());
+        boolean t2 = isContent(t.b.getX());
+        boolean t3 = isContent(t.c.getX());
         boolean rez1 = t1||t2||t3; //вхождение второго в первый
-        boolean t12 = t.isContent(a.A);
-        boolean t22 = t.isContent(b.A);
-        boolean t32 = t.isContent(c.A);
+        boolean t12 = t.isContent(a.getX());
+        boolean t22 = t.isContent(b.getX());
+        boolean t32 = t.isContent(c.getX());
         boolean rez12 = t12||t22||t32;//вхождение первого во второй
         return rez1||rez12;
     }
 
-    public Point2D getCenter()
-    {
-       Point2D center = new Point2D((a.A.x+b.A.x+c.A.x)/3,(a.A.y+b.A.y+c.A.y)/3);
-        return center;
+    Point2D getCenter() {
+        return new Point2D((a.getX().getX()+b.getX().getX()+c.getX().getX())/3,(a.getX().getY()
+                +b.getX().getY()+c.getX().getY())/3);
     }
 
-    public boolean isCross(Triangle t)
-    {
+    boolean isCross(Triangle t) {
         /*ТУПОЕ ПЕРЕСЕЧЕНИЕ Х без учета совпадения линий, исходящих линий, общих точек ЗВЕЗДА ДАВИДА*/
         boolean r1 = a.isCross(t.a);
         boolean r2 = a.isCross(t.b);
@@ -84,33 +88,30 @@ public class Triangle {
         return r1||r2||r3||r4||r5||r6||r7||r8||r9;
     }
 
-    public boolean isCrossOrSoftContent(Triangle t)
-    {
+    boolean isCrossOrSoftContent(Triangle t) {
         boolean b1 = isContentPointOfTriangle(t);
         boolean b2 = isCross(t);
-        return  b1|b2;
+        return  b1||b2;
     }
 
-    public boolean isContentFullPointsOfTriangle(Triangle t)
+    boolean isContentFullPointsOfTriangle(Triangle t){
         // Взаимное, мягкое, полное включение точек треугольника
-    {
-        boolean t1 = isContent(t.a.A);
-        boolean t2 = isContent(t.b.A);
-        boolean t3 = isContent(t.c.A);
+        boolean t1 = isContent(t.a.getX());
+        boolean t2 = isContent(t.b.getX());
+        boolean t3 = isContent(t.c.getX());
         boolean rez1 = t1&t2&t3; //вхождение второго в первый
-        boolean t12 = t.isContent(a.A);
-        boolean t22 = t.isContent(b.A);
-        boolean t32 = t.isContent(c.A);
+        boolean t12 = t.isContent(a.getX());
+        boolean t22 = t.isContent(b.getX());
+        boolean t32 = t.isContent(c.getX());
         boolean rez12 = t12&t22&t32;//вхождение первого во второй
         return rez1||rez12;
     }
 
-    public double perimeter()
-    {
-        return a.dimension()+b.dimension()+c.dimension();
+    double perimeter() {
+        return a.length()+b.length()+c.length();
     }
 
-    public ArrayList<Point2D> hardCrossPoints(Triangle t)
+    ArrayList<Point2D> hardCrossPoints(Triangle t)
     {
         /*НАХОДИТ ВСЕ ТОЧКИ "СТРОГОГО Х" ПЕРЕСЕЧЕНИЯ ТРЕУГОЛЬНИКОВ*/
         ArrayList<Point2D> pointsList = new ArrayList<>();

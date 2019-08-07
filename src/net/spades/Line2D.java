@@ -7,51 +7,66 @@ import java.awt.*;
  */
 public class Line2D {
 
-    Point2D A;
-    Point2D B;
+    private Point2D X;
+    private Point2D Y;
 
-    public Line2D(Point2D a, Point2D b)
-    {
-        B = b;
-        A = a;
+    private float A,B,C;
+
+    public Point2D getX() {
+        return X;
     }
 
-    public boolean isEquals(Line2D line2D)
-    {
-        return A.isEquals(line2D.A) & B.isEquals(line2D.B) || A.isEquals(line2D.B) & B.isEquals(line2D.A);
+    public Point2D getY() {
+        return Y;
     }
 
-    public double dimension()
-    {
-        return Math.sqrt((A.x-B.x)*(A.x-B.x)+(A.y-B.y)*(A.y-B.y));
+     Line2D(Point2D x, Point2D y) {
+        X = x;
+        Y = y;
+        A = x.getY() - y.getY();
+        B = y.getX() - x.getX();
+        C = -(A*x.getX()+B*x.getY());
     }
 
-    public boolean isCross(Line2D l) //используется в lastFirst
-    {
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj.getClass() != Line2D.class) {
+            return false;
+        }
+        Line2D line2D = (Line2D) obj;
+        return X.equals(line2D.X) & Y.equals(line2D.Y) || X.equals(line2D.Y) & Y.equals(line2D.X);
+    }
+
+     float length(){
+        return (float) Math.sqrt((X.getX()-Y.getX())*(X.getX()-Y.getX())+(X.getY()-Y.getY())*(X.getY()-Y.getY()));
+    }
+
+     boolean isCross(Line2D l){ //используется в lastFirst
+
         /* ТУПОЕ ПЕРЕСЕЧЕНИЕ Х */
-        Vector2D p3p4 = new Vector2D(l.A,l.B);
-        Vector2D p3p1 = new Vector2D(l.A,A);
-        Vector2D p3p2 = new Vector2D(l.A,B);
-        Vector2D p1p2 = new Vector2D(A,B);
-        Vector2D p1p3 = new Vector2D(A,l.A);
-        Vector2D p1p4 = new Vector2D(A,l.B);
-        double v1 = p3p4.Multiply(p3p1);
-        double v2 = p3p4.Multiply(p3p2);
-        double v3 = p1p2.Multiply(p1p3);
-        double v4 = p1p2.Multiply(p1p4);
+        Vector2D p3p4 = new Vector2D(l.X,l.Y);
+        Vector2D p3p1 = new Vector2D(l.X,X);
+        Vector2D p3p2 = new Vector2D(l.X,Y);
+        Vector2D p1p2 = new Vector2D(X,Y);
+        Vector2D p1p3 = new Vector2D(X,l.X);
+        Vector2D p1p4 = new Vector2D(X,l.Y);
+        float v1 = p3p4.Multiply(p3p1);
+        float v2 = p3p4.Multiply(p3p2);
+        float v3 = p1p2.Multiply(p1p3);
+        float v4 = p1p2.Multiply(p1p4);
         return (v1*v2<-0.01) & (v3*v4<-0.01); //не выводит совпадающие линии (строгое неравенство)
         //не выводит линии из одной точки, не выводит линии исходящие из середины другой линии
     }
 
-    public Point2D CrossPoint(Line2D l)
+     Point2D CrossPoint(Line2D f)
     {
-        FunctionLine f1 = getFunction();
-        FunctionLine f2 = l.getFunction();
-        return f1.CrossPoint(f2);
+        float x = -(C*f.B-f.C*B)/(A*f.B-f.A*B);
+        float y = -(A*f.C-f.A*C)/(A*f.B-f.A*B);
+        return new Point2D(x,y);
     }
 
-    public FunctionLine getFunction()
-    {
-        return new FunctionLine(A,B);
-    }
+
 }
