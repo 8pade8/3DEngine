@@ -20,8 +20,7 @@ public class Rectangle3D {
         return name;
     }
 
-    public Rectangle3D(Point3D a90, Point3D b, Point3D c)
-    {
+    public Rectangle3D(Point3D a90, Point3D b, Point3D c){
         A = new Triangle3D(a90,b,c);
         Point3D as = a90.symmetryOfMiddleOfLine(new Line3D(b,c));
         Point3D b2 = b.copy();
@@ -29,8 +28,7 @@ public class Rectangle3D {
         B = new Triangle3D(as,b2,c2);
     }
 
-    public Rectangle3D(Point3D a90, float size)
-    {
+    public Rectangle3D(Point3D a90, float size) {
         Point3D a91 = a90.copy();
         a91.move(size,0,0);
         Point3D a92 = a90.copy();

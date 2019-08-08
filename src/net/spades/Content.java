@@ -44,18 +44,22 @@ public class Content extends JPanel implements Runnable
 
        cam = new Camera(new Point3D(0,0,-100),1000,1);
        prj = new Projector(this);
-
+        Point3D p = new Point3D(0,0,0);
         GO = new GObject();
-        Cube3D  cube3D = new Cube3D(new Point3D(),100);
-//        Cube3D  cube3D2 = new Cube3D(new Point3D(0,0,200),100,200);
-//        Cube3D  cube3D3 = new Cube3D(new Point3D(200,0,0),100,200);
-//        Cube3D  cube3D4 = new Cube3D(new Point3D(200,0,200),100,200);
-//        Cube3D  cube3D5 = new Cube3D(new Point3D(400,0,0),100,200);
-//        Cube3D  cube3D6 = new Cube3D(new Point3D(0,0,400),100,200);
-//        Cube3D  cube3D7 = new Cube3D(new Point3D(400,0,400),100,200);
-//        Cube3D  cube3D8 = new Cube3D(new Point3D(200,0,400),100,200);
-//        Cube3D  cube3D9 = new Cube3D(new Point3D(400,0,200),100,200);
-        GO = cube3D.toGObject();
+
+
+//
+//        Cube3D  cube3D = new Cube3D(new Point3D(),100);
+//        GO = cube3D.toGObject();
+//        Cube3D  cube3D2 = new Cube3D(new Point3D(0,0,200),100);
+//        Cube3D  cube3D3 = new Cube3D(new Point3D(200,0,0),100);
+//        Cube3D  cube3D4 = new Cube3D(new Point3D(200,0,200),100);
+//        Cube3D  cube3D5 = new Cube3D(new Point3D(400,0,0),100);
+//        Cube3D  cube3D6 = new Cube3D(new Point3D(0,0,400),100);
+//        Cube3D  cube3D7 = new Cube3D(new Point3D(400,0,400),100);
+//        Cube3D  cube3D8 = new Cube3D(new Point3D(200,0,400),100);
+//        Cube3D  cube3D9 = new Cube3D(new Point3D(400,0,200),100);
+//        GO = cube3D.toGObject();
 //        GO.group(cube3D2.toGObject());
 //        GO.group(cube3D3.toGObject());
 //        GO.group(cube3D4.toGObject());
@@ -105,33 +109,31 @@ public class Content extends JPanel implements Runnable
         r2.rotateD(new Point3D(),90,Axises.X);
 
 
- //    GO.addTriangle(t1);
- //    GO.addTriangle(t1x);
-       // GO.addTriangle(t2);
-//        GO.addTriangle(t3);
-//     GO.addTriangle(t5);
-//        GO.addTriangle(t6);
-//        GO.addTriangle(t7);
-//        GO.addTriangle(t8);
-//        GO.addTriangle(t9);
-//        GO.addTriangle(t10);
-//       GO.addTriangle(t11);
-//       GO.addTriangle(t12);
-//        GO.addTriangle(t13);
-        //GO = r1.toGObject();
-       // GO.group(r2.toGObject());
+     GO.addTriangle(t1);
+     GO.addTriangle(t1x);
+        GO.addTriangle(t2);
+        GO.addTriangle(t3);
+     GO.addTriangle(t5);
+        GO.addTriangle(t6);
+        GO.addTriangle(t7);
+        GO.addTriangle(t8);
+        GO.addTriangle(t9);
+        GO.addTriangle(t10);
+       GO.addTriangle(t11);
+       GO.addTriangle(t12);
+        GO.addTriangle(t13);
+//        GO.group(r2.toGObject());
 
-        //GO.group(r4.toGObject());
 
-       //GO.group(t21.toGObject());
-       //GO.group(t22.toGObject());
-
+       GO.group(t21.toGObject());
+       GO.group(t22.toGObject());
+//
 //         GO.group(r5.toGObject()); /// ??????
 //        GO.group(r3.toGObject()); ///??????
-//        GO.group(tex1.toGObject());
-//        GO.group(tex2.toGObject());
-//        GO.group(tex3.toGObject());
-//        GO.group(tex4.toGObject());
+        GO.group(tex1.toGObject());
+        GO.group(tex2.toGObject());
+        GO.group(tex3.toGObject());
+        GO.group(tex4.toGObject());
 
 
 

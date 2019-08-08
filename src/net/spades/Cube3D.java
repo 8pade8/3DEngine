@@ -12,27 +12,20 @@ public class Cube3D {
     private Rectangle3D E;
     private Rectangle3D F;
 
-    public Cube3D(Point3D o, float a) {
-        A = new Rectangle3D(o, a);
-        Point3D o2 = o.copy();
-        B = new Rectangle3D(o2, a);
-        B.rotateD(o2,90,Axises.Y);
-        Point3D o3 = o.copy();
-        o3.move(a,0,0);
-        C = new Rectangle3D(o3, a);
-        C.rotateD(o3,90,Axises.Y);
-        Point3D o4 = o.copy();
-        o4.move(0,0,-a);
-        D = new Rectangle3D(o4,a);
-        Point3D o5 = o.copy();
-        o5.move(0,0,0);
-        E = new Rectangle3D(o5,a);
-        E.rotateD(o5,-90,Axises.X);
-        Point3D o6 = o.copy();
-        o6.move(0,0,0);
-        F = new Rectangle3D(o6,a);
-        F.rotateD(o6,-90,Axises.X);
-        F.move(0,a,0);
+    public Cube3D(Point3D p, float a) {
+        A = new Rectangle3D(p.copy(),50);
+        B = new Rectangle3D(p.copy(),50);
+        C = new Rectangle3D(p.copy(),50);
+        D = new Rectangle3D(p.copy(),50);
+        E = new Rectangle3D(p.copy(),50);
+        F = new Rectangle3D(p.copy(),50);
+        C.rotateD(p,90,Axises.X);
+        E.rotateD(p,90,Axises.X);
+        E.move(50,0,0);
+        D.rotateD(p,90,Axises.Y);
+        F.rotateD(p,90,Axises.Y);
+        F.move(0,50,0);
+        B.move(0,0,50);
     }
 
     public void rotateD(Point3D o, float angle, Axises axis) {
